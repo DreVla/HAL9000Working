@@ -1239,6 +1239,7 @@ _ThreadKernelFunction(
     NOT_REACHED;
 }
 
+// PFUNC_CompareFunc neede to compare priorities of 2 threads
 INT64
 _PriorityFunction(
 	IN PLIST_ENTRY a,
