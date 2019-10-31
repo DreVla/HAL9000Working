@@ -392,6 +392,7 @@ typedef struct _DONATION_CHAIN_THREAD_DATA
     DONATION_CHAIN_THREAD_CTX   ThreadContext;
 } DONATION_CHAIN_THREAD_DATA, *PDONATION_CHAIN_THREAD_DATA;
 
+/*
 STATUS
 (__cdecl TestThreadPriorityDonationChain)(
     IN_OPT      PVOID       Context
@@ -512,6 +513,7 @@ STATUS
 
     return status;
 }
+*/
 
 STATUS
 (__cdecl _ThreadTakeMutex)(

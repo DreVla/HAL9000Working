@@ -797,6 +797,7 @@ _ThreadInit(
         pThread->Id = _ThreadSystemGetNextTid();
         pThread->State = ThreadStateBlocked;
         pThread->Priority = Priority;
+		pThread->OriginalPriority = Priority;
 
         LockInit(&pThread->BlockLock);
 
