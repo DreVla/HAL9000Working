@@ -53,14 +53,28 @@ MutexAcquire(
         Mutex->CurrentRecursivityDepth = 1;
     }
 
-    while (Mutex->Holder != pCurrentThread)
-    {
-        InsertOrderedList(&Mutex->WaitingList, &pCurrentThread->ReadyList, _PriorityFunction, NULL);
-        ThreadTakeBlockLock();
-        LockRelease(&Mutex->MutexLock, dummyState);
-        ThreadBlock();
-        LockAcquire(&Mutex->MutexLock, &dummyState );
-    }
+	// Verifica daca prioritata thread-ului ce vrea mutexul e mai mare decat a holderului
+	/*
+	if (pCurrentThread->Priority > Mutex->Holder->Priority) {
+		// Daca da atunci ii doneaza prioritatea la holder
+		Mutex->Holder->Priority = pCurrentThread->Priority;
+	}
+	*/
+	while (Mutex->Holder != pCurrentThread)
+	{
+		
+		if (pCurrentThread->Priority > Mutex->Holder->Priority) {
+			// Daca da atunci ii doneaza prioritatea la holder
+			Mutex->Holder->Priority = pCurrentThread->Priority;
+		}
+		
+		InsertOrderedList(&Mutex->WaitingList, &pCurrentThread->ReadyList, _PriorityFunction, NULL);
+		ThreadTakeBlockLock();
+		LockRelease(&Mutex->MutexLock, dummyState);
+		ThreadBlock();
+		LockAcquire(&Mutex->MutexLock, &dummyState);
+	}
+	
 
     _Analysis_assume_lock_acquired_(*Mutex);
 
@@ -108,6 +122,11 @@ MutexRelease(
     }
 
     _Analysis_assume_lock_released_(*Mutex);
+
+	// Lock holder revine la prioritatea originala
+	// pierde toate donatiile de prioritate
+	GetCurrentThread()->Priority = GetCurrentThread()->OriginalPriority;
+	// ThreadSetPriority(GetCurrentThread()->OriginalPriority);
 
     LockRelease(&Mutex->MutexLock, oldState);
 }

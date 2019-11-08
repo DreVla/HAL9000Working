@@ -181,6 +181,8 @@ const THREAD_TEST THREADS_TEST[] =
     // T[1] also receives T[2]'s priority because it holds Mutex[1] and as a result T[2]'s priority will be donated to
     // the main thread.
     // The same happens for T[2]...
+
+		/*
     {   "TestThreadPriorityDonationNest", TestThreadPriorityDonationChain,
         _ThreadTestPassContext, (PVOID) 3, NULL, NULL,
         ThreadPriorityDefault, FALSE, TRUE, FALSE},
@@ -189,6 +191,7 @@ const THREAD_TEST THREADS_TEST[] =
     {   "TestThreadPriorityDonationChain", TestThreadPriorityDonationChain,
         _ThreadTestPassContext, (PVOID) 7, NULL, NULL,
         ThreadPriorityDefault, FALSE, TRUE, FALSE},
+		*/
 };
 
 const DWORD THREADS_TOTAL_NO_OF_TESTS = ARRAYSIZE(THREADS_TEST);

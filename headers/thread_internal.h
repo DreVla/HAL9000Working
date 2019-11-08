@@ -44,6 +44,12 @@ typedef struct _THREAD
     THREAD_PRIORITY         Priority;
     THREAD_STATE            State;
 
+	// Need to remember the original priority of a thread for donation
+	THREAD_PRIORITY			OriginalPriority;
+
+	// Lista cu lock-uri pe care le tine un thread
+	LIST_ENTRY				LocksHeld;
+
     // valid only if State == ThreadStateTerminated
     STATUS                  ExitStatus;
     EX_EVENT                TerminationEvt;

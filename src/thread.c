@@ -797,6 +797,7 @@ _ThreadInit(
         pThread->Id = _ThreadSystemGetNextTid();
         pThread->State = ThreadStateBlocked;
         pThread->Priority = Priority;
+		pThread->OriginalPriority = Priority;
 
         LockInit(&pThread->BlockLock);
 
@@ -954,7 +955,7 @@ _ThreadSetupMainThreadUserStack(
     ASSERT(ResultingStack != NULL);
     ASSERT(Process != NULL);
 
-    *ResultingStack = InitialStack;
+    *ResultingStack = (PVOID)PtrDiff(InitialStack, SHADOW_STACK_SIZE + sizeof(PVOID));
 
     return STATUS_SUCCESS;
 }
@@ -1239,6 +1240,7 @@ _ThreadKernelFunction(
     NOT_REACHED;
 }
 
+// PFUNC_CompareFunc neede to compare priorities of 2 threads
 INT64
 _PriorityFunction(
 	IN PLIST_ENTRY a,

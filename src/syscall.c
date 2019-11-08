@@ -40,7 +40,7 @@ SyscallHandler(
         }
 
         sysCallId = usermodeProcessorState->RegisterValues[RegisterR8];
-
+		LOG_TRACE_USERMODE("System call ID is %u\n", sysCallId);
         // The first parameter is the system call ID, we don't care about it => +1
         pSyscallParameters = (PQWORD)usermodeProcessorState->RegisterValues[RegisterRbp] + 1;
 
